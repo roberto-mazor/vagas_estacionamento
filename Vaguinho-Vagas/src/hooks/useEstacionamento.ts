@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { Veiculo } from '../types';
 
 export const useEstacionamento = () => {
@@ -41,21 +41,32 @@ export const useEstacionamento = () => {
   const darBaixa = (veiculo: Veiculo): void => {
     const valorFinal = calcularValor(veiculo.entrada);
     const horaSaidaFormatada = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    const horaEntradaFormatada = veiculo.entrada.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const horaEntradaFormatada = new Date(veiculo.entrada).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-    Alert.alert(
-      'Conta Fechada',
-      `Veículo: ${veiculo.placa}\nEntrada: ${horaEntradaFormatada}\nSaída: ${horaSaidaFormatada}\n\nValor total: R$ ${valorFinal.toFixed(2)}`,
-      [
-        {
-          text: 'Concluir e Liberar Vaga',
-          onPress: () => {
-            setVagas(vagas.filter(item => item.id !== veiculo.id));
-          }
-        },
-        { text: 'Cancelar', style: 'cancel' }
-      ]
-    );
+    const mensagem = `Veículo: ${veiculo.placa}\nEntrada: ${horaEntradaFormatada}\nSaída: ${horaSaidaFormatada}\n\nValor total: R$ ${valorFinal.toFixed(2)}`;
+
+    // Se estiver rodando no Navegador (Web)
+    if (Platform.OS === 'web') {
+      const confirmar = window.confirm(`Conta Fechada\n\n${mensagem}\n\nDeseja concluir e liberar a vaga?`);
+      if (confirmar) {
+        setVagas(vagas.filter(item => item.id !== veiculo.id));
+      }
+    } else {
+      // Se estiver rodando no Celular (Android / iOS)
+      Alert.alert(
+        'Conta Fechada',
+        mensagem,
+        [
+          {
+            text: 'Concluir e Liberar Vaga',
+            onPress: () => {
+              setVagas(vagas.filter(item => item.id !== veiculo.id));
+            }
+          },
+          { text: 'Cancelar', style: 'cancel' }
+        ]
+      );
+    }
   };
 
   return {

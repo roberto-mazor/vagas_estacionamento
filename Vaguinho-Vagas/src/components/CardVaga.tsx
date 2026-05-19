@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   botaoCheck: {
-    padding: 5,
+    padding: 15,
   },
   circuloCheck: {
     width: 24,
