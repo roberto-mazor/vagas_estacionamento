@@ -46,5 +46,5 @@ Depois, abra no Expo Go, no emulador ou no navegador conforme desejar.
 
 ## Observações
 
-- O app não persiste os dados entre reinícios: as vagas são mantidas apenas em memória.
+- O app persiste as vagas usando `AsyncStorage`, então os dados permanecem salvos após reiniciar o app.
 - A validação exige que a placa não seja vazia.
