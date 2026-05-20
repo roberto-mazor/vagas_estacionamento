@@ -10,7 +10,7 @@ export const useEstacionamento = () => {
   const [placa, setPlaca] = useState<string>('');
   const [vagas, setVagas] = useState<Veiculo[]>([]);
 
-  // 1. CARREGAR OS DADOS ASSIM QUE O APP ABRIR
+  //  CARREGAR OS DADOS ASSIM QUE O APP ABRIR
   useEffect(() => {
     const carregarDados = async () => {
       try {
@@ -30,7 +30,7 @@ export const useEstacionamento = () => {
     carregarDados();
   }, []);
 
-  // 2. FUNÇÃO AUXILIAR PARA SALVAR OS DADOS NO DISPOSITIVO
+  // FUNÇÃO AUXILIAR PARA SALVAR OS DADOS NO DISPOSITIVO
   const salvarDados = async (novasVagas: Veiculo[]) => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(novasVagas));
@@ -53,7 +53,7 @@ export const useEstacionamento = () => {
 
     const listaAtualizada = [...vagas, novoVeiculo];
     setVagas(listaAtualizada);
-    salvarDados(listaAtualizada); // Salva no dispositivo
+    salvarDados(listaAtualizada);
     setPlaca('');
   };
 
