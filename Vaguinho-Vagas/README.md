@@ -49,6 +49,6 @@ npm start
 
 ## Observações
 
-- Os dados não são persistidos; reiniciar o app limpa a lista de vagas.
+- Os dados são persistidos localmente usando `AsyncStorage`, então a lista de vagas permanece disponível após reiniciar o app.
 - O app aceita placa em formato de texto e converte para maiúsculas automaticamente.
 - Em Web, a confirmação de baixa é exibida via `window.confirm`. Em Android/iOS, usa `Alert`.
